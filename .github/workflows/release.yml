@@ -88,7 +88,7 @@ jobs:
 
     steps:
       - name: Download verified release assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: release-assets-${{ github.ref_name }}
           path: dist-release
