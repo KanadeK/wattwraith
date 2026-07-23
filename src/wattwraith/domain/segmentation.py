@@ -106,9 +106,7 @@ def segment_power_states(
         center = float(median(group))
         if center <= config.off_threshold_w:
             state_label = "off"
-        elif center <= maximum_standby and not any(
-            state.label == "standby" for state in states
-        ):
+        elif center <= maximum_standby and not any(state.label == "standby" for state in states):
             state_label = "standby"
         else:
             state_label = "active"

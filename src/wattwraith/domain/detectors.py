@@ -84,9 +84,7 @@ def _correlation(values: list[int], lag: int) -> float:
     right = values[lag:]
     left_mean = sum(left) / len(left)
     right_mean = sum(right) / len(right)
-    numerator = sum(
-        (a - left_mean) * (b - right_mean) for a, b in zip(left, right, strict=True)
-    )
+    numerator = sum((a - left_mean) * (b - right_mean) for a, b in zip(left, right, strict=True))
     left_sum = sum((value - left_mean) ** 2 for value in left)
     right_sum = sum((value - right_mean) ** 2 for value in right)
     denominator = sqrt(left_sum * right_sum)
@@ -218,9 +216,7 @@ def detect_baseline(
             confidence=coverage * 0.5,
         )
     mask = tuple(label == segmentation.standby_state for label in segmentation.labels)
-    stability = 1.0 - min(
-        1.0, (1.4826 * state.mad_w) / (0.25 * max(state.median_w, 1.0))
-    )
+    stability = 1.0 - min(1.0, (1.4826 * state.mad_w) / (0.25 * max(state.median_w, 1.0)))
     support = min(1.0, state.occupancy / 0.20)
     score = 0.35 * stability + 0.25 * support + 0.25 * segmentation.confidence + 0.15 * coverage
     confidence = _confidence(
@@ -239,9 +235,7 @@ def detect_baseline(
             status=DetectionStatus.DETECTED,
             confidence=confidence,
             evidence=tuple(evidence),
-            episodes=_episodes(
-                frame, mask, target_w=target_w, cadence_seconds=cadence_seconds
-            ),
+            episodes=_episodes(frame, mask, target_w=target_w, cadence_seconds=cadence_seconds),
             summary=f"Stable low-power state near {state.median_w:.2f} W.",
         ),
         mask,
@@ -307,19 +301,12 @@ def detect_periodic_standby(
             confidence=coverage * 0.6,
         )
 
-    intervals = [
-        (right - left).total_seconds()
-        for left, right in pairwise(transitions)
-    ]
+    intervals = [(right - left).total_seconds() for left, right in pairwise(transitions)]
     period_seconds = float(median(intervals))
     mad_ratio = _mad(intervals) / period_seconds if period_seconds else 1.0
     lag = max(1, round(period_seconds / cadence_seconds))
     correlation = _correlation(binary, lag)
-    in_range = (
-        config.min_period_minutes * 60
-        <= period_seconds
-        <= config.max_period_hours * 3600
-    )
+    in_range = config.min_period_minutes * 60 <= period_seconds <= config.max_period_hours * 3600
     consistent = mad_ratio <= config.periodic_interval_mad_ratio
     correlated = correlation >= config.periodic_autocorrelation_threshold
     evidence.extend(
@@ -329,9 +316,7 @@ def detect_periodic_standby(
                 metric="period",
                 observed=round(period_seconds / 3600, 6),
                 operator="between",
-                threshold=(
-                    f"{config.min_period_minutes / 60:g}..{config.max_period_hours:g}"
-                ),
+                threshold=(f"{config.min_period_minutes / 60:g}..{config.max_period_hours:g}"),
                 unit="hours",
                 passed=in_range,
                 explanation="The candidate period must be in the configured range.",
@@ -367,9 +352,7 @@ def detect_periodic_standby(
         )
     cycle_support = min(1.0, (len(transitions) - 1) / 6)
     corr_strength = _clip((correlation - 0.35) / 0.65)
-    interval_consistency = 1.0 - min(
-        1.0, mad_ratio / config.periodic_interval_mad_ratio
-    )
+    interval_consistency = 1.0 - min(1.0, mad_ratio / config.periodic_interval_mad_ratio)
     score = (
         0.40 * corr_strength
         + 0.20 * cycle_support
@@ -392,9 +375,7 @@ def detect_periodic_standby(
                 },
             ),
             evidence=tuple(evidence),
-            episodes=_episodes(
-                frame, mask, target_w=target_w, cadence_seconds=cadence_seconds
-            ),
+            episodes=_episodes(frame, mask, target_w=target_w, cadence_seconds=cadence_seconds),
             summary=f"Standby transitions repeat about every {period_seconds / 3600:.2f} h.",
         ),
         mask,
@@ -494,8 +475,7 @@ def detect_overnight_sustained(
             frame.height,
         )
     detected = (
-        pass_rate >= config.night_pass_rate
-        and median_fraction >= config.night_sustained_fraction
+        pass_rate >= config.night_pass_rate and median_fraction >= config.night_sustained_fraction
     )
     if not detected:
         return _empty(
@@ -517,10 +497,7 @@ def detect_overnight_sustained(
     median_coverage = float(median(item[1] for item in valid))
     night_support = min(1.0, len(valid) / 7)
     score = (
-        0.30 * median_coverage
-        + 0.30 * pass_rate
-        + 0.25 * median_fraction
-        + 0.15 * night_support
+        0.30 * median_coverage + 0.30 * pass_rate + 0.25 * median_fraction + 0.15 * night_support
     )
     return DetectorComputation(
         DetectorResult(
@@ -536,9 +513,7 @@ def detect_overnight_sustained(
                 },
             ),
             evidence=tuple(evidence),
-            episodes=_episodes(
-                frame, mask, target_w=target_w, cadence_seconds=cadence_seconds
-            ),
+            episodes=_episodes(frame, mask, target_w=target_w, cadence_seconds=cadence_seconds),
             summary=f"Sustained draw above {threshold_w:.2f} W occurs overnight.",
         ),
         mask,
@@ -649,9 +624,7 @@ def detect_anomaly_spikes(
                 cap=1.0 if used_isolation_forest else 0.65,
             ),
             evidence=tuple(evidence),
-            episodes=_episodes(
-                frame, mask, target_w=target_w, cadence_seconds=cadence_seconds
-            ),
+            episodes=_episodes(frame, mask, target_w=target_w, cadence_seconds=cadence_seconds),
             summary=f"Detected {count} isolated high-power sample(s).",
         ),
         mask,

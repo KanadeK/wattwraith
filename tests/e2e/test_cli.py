@@ -71,9 +71,7 @@ def test_analyze_json_applies_tariff_override(tmp_path: Path) -> None:
     assert completed.returncode == 0, completed.stderr
     summary = json.loads(completed.stdout)
     assert summary["price_per_kwh"] == "1.24"
-    payload = json.loads(
-        (output / "wattwraith-report.json").read_text(encoding="utf-8")
-    )
+    payload = json.loads((output / "wattwraith-report.json").read_text(encoding="utf-8"))
     assert all(report["tariff"]["price_per_kwh"] == "1.24" for report in payload["reports"])
     assert any(report["savings"]["estimates"] for report in payload["reports"])
 

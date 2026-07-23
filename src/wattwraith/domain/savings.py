@@ -44,9 +44,7 @@ def _period_estimates(
             period=period,
             days=days,
             energy_kwh=(daily_kwh * days).quantize(_ENERGY_QUANTUM, ROUND_HALF_UP),
-            cost=(daily_kwh * days * tariff.price_per_kwh).quantize(
-                _MONEY_QUANTUM, ROUND_HALF_UP
-            ),
+            cost=(daily_kwh * days * tariff.price_per_kwh).quantize(_MONEY_QUANTUM, ROUND_HALF_UP),
             currency=tariff.currency,
             assumptions=assumptions,
         )
@@ -75,9 +73,7 @@ def estimate_savings(
             covered_days=Decimal("0"),
             estimates=(),
             estimate_kind="suppressed",
-            suppression_reason=(
-                "Essential device has no user-supplied safe standby target."
-            ),
+            suppression_reason=("Essential device has no user-supplied safe standby target."),
         )
 
     effective_target = target if target is not None else config.off_threshold_w
@@ -88,8 +84,7 @@ def estimate_savings(
         and computation.result.kind != FindingKind.ANOMALY_SPIKE
     ]
     union_mask = [
-        any(computation.mask[index] for computation in included)
-        for index in range(frame.height)
+        any(computation.mask[index] for computation in included) for index in range(frame.height)
     ]
     avoidable_w = [
         max(0.0, value - effective_target) if union_mask[index] else 0.0
@@ -106,9 +101,7 @@ def estimate_savings(
     if coverage < config.minimum_coverage or covered_days < 2:
         return SavingsProjection(
             observed_avoidable_kwh=observed_kwh,
-            covered_days=_decimal(covered_days).quantize(
-                Decimal("0.001"), ROUND_HALF_UP
-            ),
+            covered_days=_decimal(covered_days).quantize(Decimal("0.001"), ROUND_HALF_UP),
             estimates=(),
             estimate_kind="suppressed",
             suppression_reason="At least two covered days and 75% coverage are required.",

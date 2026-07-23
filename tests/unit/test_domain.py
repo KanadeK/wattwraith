@@ -194,6 +194,4 @@ def test_isolation_forest_is_deterministic() -> None:
     powers[300] = 300.0
     first = analyze_device(_frame(powers), _annotation(), _tariff(), clock=FixedClock())
     second = analyze_device(_frame(powers), _annotation(), _tariff(), clock=FixedClock())
-    assert _result(first, FindingKind.ANOMALY_SPIKE) == _result(
-        second, FindingKind.ANOMALY_SPIKE
-    )
+    assert _result(first, FindingKind.ANOMALY_SPIKE) == _result(second, FindingKind.ANOMALY_SPIKE)

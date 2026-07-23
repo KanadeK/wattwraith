@@ -147,9 +147,7 @@ def _render_reports(frame: pl.DataFrame, reports: tuple[AnalysisReport, ...]) ->
     for report in reports:
         st.markdown(f"### {report.annotation.display_name or report.annotation.device_id}")
         columns = st.columns(3)
-        annual = next(
-            (item for item in report.savings.estimates if item.period == "year"), None
-        )
+        annual = next((item for item in report.savings.estimates if item.period == "year"), None)
         columns[0].metric(
             "Annual potential",
             f"{annual.energy_kwh if annual else Decimal('0')} kWh",
@@ -208,12 +206,8 @@ def _render_reports(frame: pl.DataFrame, reports: tuple[AnalysisReport, ...]) ->
     downloads[0].download_button(
         "Download JSON", json_text, "wattwraith-report.json", "application/json"
     )
-    downloads[1].download_button(
-        "Download CSV", csv_text, "wattwraith-report.csv", "text/csv"
-    )
-    downloads[2].download_button(
-        "Download HTML", html_text, "wattwraith-report.html", "text/html"
-    )
+    downloads[1].download_button("Download CSV", csv_text, "wattwraith-report.csv", "text/csv")
+    downloads[2].download_button("Download HTML", html_text, "wattwraith-report.html", "text/html")
 
 
 def main() -> None:

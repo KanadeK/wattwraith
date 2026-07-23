@@ -106,9 +106,7 @@ def infer_cadence_seconds(frame: pl.DataFrame) -> float:
 
     timestamps = frame.get_column("timestamp").to_list()
     differences = [
-        (right - left).total_seconds()
-        for left, right in pairwise(timestamps)
-        if right > left
+        (right - left).total_seconds() for left, right in pairwise(timestamps) if right > left
     ]
     if not differences:
         raise FrameValidationError("timestamps must have a positive span")
@@ -133,8 +131,7 @@ def compute_coverage(
     valid_seconds = sum(
         delta
         for left, right in pairwise(timestamps)
-        if 0 < (delta := (right - left).total_seconds())
-        <= cadence_seconds * max_gap_factor
+        if 0 < (delta := (right - left).total_seconds()) <= cadence_seconds * max_gap_factor
     )
     return float(max(0.0, min(1.0, valid_seconds / total_span)))
 
