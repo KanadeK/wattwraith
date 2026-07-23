@@ -1,0 +1,85 @@
+name: Bug report
+description: Report a reproducible problem in WattWraith
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve WattWraith. Please use synthetic or redacted
+        power data only. Never attach credentials, private smart-home exports,
+        or data that could identify a person or household.
+
+  - type: input
+    id: version
+    attributes:
+      label: WattWraith version
+      description: Run `wattwraith --version` or provide the commit SHA.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Interface
+      options:
+        - Command-line interface
+        - Streamlit application
+        - Python package
+        - Packaging or installation
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and why it is a problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Include the smallest commands or synthetic input needed to reproduce the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Explain what you expected WattWraith to do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include operating system, Python version, installation method, and browser if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste only redacted logs. Do not include tokens, file contents, or personal data.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues for this problem.
+          required: true
+        - label: I used only synthetic or redacted data and removed all secrets and personal information.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true
