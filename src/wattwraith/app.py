@@ -29,6 +29,7 @@ _CSS = """
 .block-container { max-width:1180px; padding-top:2rem; }
 h1 { letter-spacing:-.045em; line-height:.95; }
 [data-testid="stMetric"] { background:#fffdf7; border:1px solid #d8d1c2; padding:1rem; }
+[data-testid="stMetric"] * { color:var(--ww-ink) !important; }
 button:focus-visible, input:focus-visible, [role="button"]:focus-visible {
   outline:3px solid var(--ww-accent) !important; outline-offset:3px;
 }
