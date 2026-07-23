@@ -1,0 +1,16 @@
+{
+  "seed": 32,
+  "cadence_minutes": 5,
+  "days": 7,
+  "rows": 8064,
+  "devices": [
+    "refrigerator",
+    "television",
+    "game_console",
+    "printer"
+  ],
+  "files": {
+    "smart_plug_week.csv": "0d9066247d82998cce3213ca6fcd04ddc391fde0df0737f2e9966fa742b9b88f",
+    "smart_plug_week.json": "717afa4f6926d862411f4d271917386ea8a71b3d6f6025a913fc2e363e646d33"
+  }
+}

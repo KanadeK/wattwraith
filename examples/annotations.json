@@ -1,0 +1,38 @@
+{
+  "refrigerator": {
+    "display_name": "Kitchen refrigerator (synthetic)",
+    "device_type": "refrigerator",
+    "annotation_origin": "fixture",
+    "timezone": "UTC",
+    "essential": true,
+    "shutdown_allowed": false,
+    "standby_target_w": 3.0
+  },
+  "television": {
+    "display_name": "Living-room television (synthetic)",
+    "device_type": "television",
+    "annotation_origin": "fixture",
+    "timezone": "UTC",
+    "essential": false,
+    "shutdown_allowed": true,
+    "standby_target_w": 1.0
+  },
+  "game_console": {
+    "display_name": "Game console (synthetic)",
+    "device_type": "game_console",
+    "annotation_origin": "fixture",
+    "timezone": "UTC",
+    "essential": false,
+    "shutdown_allowed": true,
+    "standby_target_w": 1.0
+  },
+  "printer": {
+    "display_name": "Home printer (synthetic)",
+    "device_type": "printer",
+    "annotation_origin": "fixture",
+    "timezone": "UTC",
+    "essential": false,
+    "shutdown_allowed": true,
+    "standby_target_w": 1.0
+  }
+}

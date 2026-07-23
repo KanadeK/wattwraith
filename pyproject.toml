@@ -64,7 +64,7 @@ mypy_path = "src"
 warn_unused_configs = true
 
 [tool.pytest.ini_options]
-addopts = "-ra --strict-config --strict-markers"
+addopts = "-ra --strict-config --strict-markers --basetemp=.pytest-tmp"
 testpaths = ["tests"]
 markers = [
   "integration: tests that cross adapter or process boundaries",
@@ -82,4 +82,3 @@ exclude_also = [
   "if TYPE_CHECKING:",
   "if __name__ == .__main__.:",
 ]
-
