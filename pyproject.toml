@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wattwraith"
+version = "0.1.0.dev0"
+description = "Explainable, offline-first standby and phantom-load analysis for smart-plug time series."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "KanadeK" }]
+keywords = ["energy", "smart-home", "time-series", "sustainability"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+  "plotly>=6.3.0,<7",
+  "polars>=1.32.0,<2",
+  "pydantic>=2.11.0,<3",
+  "scikit-learn>=1.7.0,<2",
+  "streamlit>=1.48.0,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.3.0,<2",
+  "mypy>=1.17.0,<2",
+  "pip-audit>=2.9.0,<3",
+  "pytest>=8.4.0,<9",
+  "pytest-cov>=6.2.0,<8",
+  "ruff>=0.12.0,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/KanadeK/wattwraith"
+Issues = "https://github.com/KanadeK/wattwraith/issues"
+
+[project.scripts]
+wattwraith = "wattwraith.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wattwraith"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["wattwraith"]
+mypy_path = "src"
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "integration: tests that cross adapter or process boundaries",
+  "e2e: tests that exercise a user entry point",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["wattwraith"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = [
+  "if TYPE_CHECKING:",
+  "if __name__ == .__main__.:",
+]
+
