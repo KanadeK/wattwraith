@@ -84,7 +84,11 @@ def main() -> int:
 
     csv_path = output_dir / "smart_plug_week.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=("timestamp", "device_id", "watts"))
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=("timestamp", "device_id", "watts"),
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
 

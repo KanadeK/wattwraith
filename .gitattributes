@@ -1,0 +1,2 @@
+examples/data/*.csv text eol=lf
+src/wattwraith/resources/*.csv text eol=lf

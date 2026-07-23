@@ -176,10 +176,16 @@ def test_fixture_generator_reproduces_committed_artifacts(tmp_path: Path) -> Non
     assert completed.returncode == 0, completed.stderr
     generated = isolated_root / "examples" / "data"
     committed = ROOT / "examples" / "data"
+    generated_csv = generated / "smart_plug_week.csv"
+    assert b"\r\n" not in generated_csv.read_bytes()
     assert _sha256(generated / "smart_plug_week.csv") == _sha256(committed / "smart_plug_week.csv")
     assert _sha256(generated / "smart_plug_week.json") == _sha256(
         committed / "smart_plug_week.json"
     )
-    assert json.loads((generated / "manifest.json").read_text(encoding="utf-8")) == json.loads(
-        (committed / "manifest.json").read_text(encoding="utf-8")
+    generated_manifest = json.loads((generated / "manifest.json").read_text(encoding="utf-8"))
+    committed_manifest = json.loads((committed / "manifest.json").read_text(encoding="utf-8"))
+    assert generated_manifest == committed_manifest
+    assert generated_manifest["files"]["smart_plug_week.csv"] == _sha256(generated_csv)
+    assert generated_manifest["files"]["smart_plug_week.json"] == _sha256(
+        generated / "smart_plug_week.json"
     )
