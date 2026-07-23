@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "wattwraith"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Explainable, offline-first standby and phantom-load analysis for smart-plug time series."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"

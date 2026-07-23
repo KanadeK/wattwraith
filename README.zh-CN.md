@@ -11,7 +11,7 @@ WattWraith 导入 CSV 或 JSON，检测低功耗基线、周期唤醒、夜间�
 
 ![WattWraith 正在分析仓库内四设备合成样例](docs/assets/wattwraith-result.png)
 
-当前状态：**v0.1.0 发布候选版**
+当前状态：**v0.1.0**
 
 - 默认本地运行：无需账户、云服务、遥测或外部 API。
 - 可复核：每个结果都有规则 ID、实测证据、状态和置信度。

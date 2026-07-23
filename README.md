@@ -12,7 +12,7 @@ verifiable energy and tariff savings.
 
 ![WattWraith analyzing the committed four-device synthetic fixture](docs/assets/wattwraith-result.png)
 
-Current status: **v0.1.0 release candidate**
+Current status: **v0.1.0**
 
 - Local by default: no account, cloud service, telemetry, or external API.
 - Reviewable: every result has a rule ID, measured evidence, status, and confidence.
