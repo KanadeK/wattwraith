@@ -35,6 +35,11 @@ def test_security_release_and_pages_workflows_cover_known_hosting_constraints() 
     release = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
     assert 'git config --local user.name "KanadeK"' in release
     assert "121669563+KanadeK@users.noreply.github.com" in release
+    assert (
+        'git fetch --force origin "refs/tags/$GITHUB_REF_NAME:refs/tags/$GITHUB_REF_NAME"'
+        in release
+    )
+    assert 'git cat-file -t "refs/tags/$GITHUB_REF_NAME"' in release
 
     pages = (ROOT / ".github" / "workflows" / "pages.yml").read_text(encoding="utf-8")
     assert "pages: write" in pages

@@ -49,7 +49,8 @@ jobs:
       - name: Verify annotated tag and package version
         shell: bash
         run: |
-          test "$(git cat-file -t "$GITHUB_REF_NAME")" = "tag"
+          git fetch --force origin "refs/tags/$GITHUB_REF_NAME:refs/tags/$GITHUB_REF_NAME"
+          test "$(git cat-file -t "refs/tags/$GITHUB_REF_NAME")" = "tag"
           uv run python -c "import os, pathlib, tomllib; version = tomllib.loads(pathlib.Path('pyproject.toml').read_text(encoding='utf-8'))['project']['version']; actual = os.environ['GITHUB_REF_NAME']; expected = f'v{version}'; print(f'tag={actual} package={version}'); raise SystemExit(0 if actual == expected else f'Expected tag {expected}, got {actual}')"
 
       - name: Run the complete quality gate
